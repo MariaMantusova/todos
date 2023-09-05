@@ -1,5 +1,6 @@
 .header {
     background-color: #CE0063;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
