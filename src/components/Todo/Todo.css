@@ -1,1 +1,15 @@
+.todo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    border: 1px solid #CE0063;
+    border-radius: 20px;
+    max-width: 70%;
+    width: 100%;
+    margin: 0 auto;
+}
 
+.todo__title {
+    font-size: 20px;
+    margin: 0;
+}
