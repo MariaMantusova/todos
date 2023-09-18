@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Todo} from "../interfaces/mainInterfaces";
 import {TodosState} from "../types/mainTypes";
 
 const initialState:TodosState = {

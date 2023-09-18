@@ -13,3 +13,7 @@
     font-size: 20px;
     margin: 0;
 }
+
+.todo__title_completed {
+    text-decoration: line-through;
+}
