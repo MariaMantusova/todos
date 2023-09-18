@@ -11,9 +11,6 @@ function TodoList() {
             {todos.map((todo, index) => (
                 <Todo title={todo.title} id={todo.id} completed={todo.completed} key={index}/>
             ))}
-            <Todo completed={true} id="43423" title="Какой-то текст"/>
-            <Todo  completed={false} id="54" title="Какой-то текст 1"/>
-            <Todo  completed={true} id="7685940" title="Какой-то текст 2"/>
         </ul>
     );
 }

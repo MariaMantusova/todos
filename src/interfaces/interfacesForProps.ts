@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IPropsTodo {
     title: string,
     id: string,
@@ -18,5 +20,5 @@ export interface IPropsAddingInput {
 export interface IPropsForm {
     value: string,
     updateText: (str: string) => void,
-    handleAction: () => void
+    handleAction: (event: any) => void
 }
