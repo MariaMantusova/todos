@@ -9,3 +9,14 @@ export interface IPropsIconsList {
     onDelete: () => void,
     completed: boolean
 }
+
+export interface IPropsAddingInput {
+    value: string,
+    updateText: (str: string) => void,
+}
+
+export interface IPropsForm {
+    value: string,
+    updateText: (str: string) => void,
+    handleAction: () => void
+}

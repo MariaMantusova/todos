@@ -1,12 +1,13 @@
 import React from 'react';
 import "./Form.css";
 import AddingInput from "../AddingInput/AddingInput";
+import {IPropsForm} from "../../interfaces/interfacesForProps";
 
-function Form() {
+function Form(props: IPropsForm) {
     return (
         <form className="form">
-            <AddingInput/>
-            <button className="form__button">Добавить</button>
+            <AddingInput value={props.value} updateText={props.updateText}/>
+            <button className="form__button" onClick={props.handleAction}>Добавить</button>
         </form>
     );
 }
