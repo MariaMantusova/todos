@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { useAppDispatch } from "../../hook";
-// import {addTodo} from "../../store/todoSlice";
 import Header from "../Header/Header";
 import Form from "../Form/Form";
 import TodoList from "../TodoList/TodoList";

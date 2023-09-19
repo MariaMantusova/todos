@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {TodosState} from "../types/mainTypes";
 import {Todo} from "../interfaces/mainInterfaces";
 
@@ -38,6 +38,33 @@ export const addNewTodo = createAsyncThunk<Todo, string, {rejectValue: string}>(
         }
 
         return (await response.json()) as Todo;
+    }
+)
+
+export const toggleStatus = createAsyncThunk<Todo, string, {rejectValue: string, state: {todos: TodosState}}>(
+    "todos/toggleStatus",
+    async function (id, {rejectWithValue, getState}) {
+        const todo = getState().todos.list.find(todo => todo.id === id);
+
+        if (todo) {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    completed: !todo.completed,
+                })
+            })
+
+            if (!response.ok) {
+                return rejectWithValue("Не получается выполнить задание.")
+            }
+
+            return (await response.json()) as Todo;
+        }
+
+        return rejectWithValue("Нет такого задания.")
     }
 )
 
@@ -83,6 +110,16 @@ const todoSlice = createSlice({
             })
             .addCase(addNewTodo.fulfilled, (state, action) => {
                 state.list.push(action.payload);
+            })
+            .addCase(toggleStatus.pending, (state) => {
+                state.error = null;
+            })
+            .addCase(toggleStatus.fulfilled, (state, action) => {
+                const toggledTodo = state.list.find(todo => todo.id === action.payload.id)
+
+                if (toggledTodo) {
+                    toggledTodo.completed = !toggledTodo.completed
+                }
             })
     }
 })
