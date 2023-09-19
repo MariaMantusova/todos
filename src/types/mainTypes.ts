@@ -1,5 +1,7 @@
 import {Todo} from "../interfaces/mainInterfaces";
 
 export type TodosState = {
-    list: Todo[];
+    list: Todo[],
+    loading: boolean,
+    error: string | null,
 }
