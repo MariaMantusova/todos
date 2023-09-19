@@ -68,6 +68,21 @@ export const toggleStatus = createAsyncThunk<Todo, string, {rejectValue: string,
     }
 )
 
+export const deleteTodo = createAsyncThunk<string, string, {rejectValue: string}>(
+    "todos/deleteTodo",
+    async function (id, {rejectWithValue}) {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+            method: "DELETE",
+        })
+
+        if (!response.ok) {
+            return rejectWithValue("Не получается выполнить задание.")
+        }
+
+        return id;
+    }
+)
+
 const initialState:TodosState = {
     list: [],
     loading: false,
@@ -77,24 +92,7 @@ const initialState:TodosState = {
 const todoSlice = createSlice({
     name: "todos",
     initialState,
-    reducers: {
-        // addTodo(state, action: PayloadAction<string>) {
-        //     state.list.push({
-        //         id: new Date().toISOString(),
-        //         title: action.payload,
-        //         completed: false,
-        //     })
-        // },
-        // toggleComplete(state, action: PayloadAction<string>) {
-        //     const toggledTodo = state.list.find(todo => todo.id === action.payload)
-        //     if (toggledTodo) {
-        //         toggledTodo.completed = !toggledTodo.completed
-        //     }
-        // },
-        // removeTodo(state, action: PayloadAction<string>) {
-        //     state.list = state.list.filter(todo => todo.id !== action.payload)
-        // }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchTodos.pending, (state) => {
@@ -121,8 +119,13 @@ const todoSlice = createSlice({
                     toggledTodo.completed = !toggledTodo.completed
                 }
             })
+            .addCase(deleteTodo.pending, (state) => {
+                state.error = null;
+            })
+            .addCase(deleteTodo.fulfilled, (state, action) => {
+                state.list = state.list.filter(todo => todo.id !== action.payload)
+            })
     }
 })
 
-// export const {addTodo, toggleComplete, removeTodo} = todoSlice.actions;
 export default todoSlice.reducer;
