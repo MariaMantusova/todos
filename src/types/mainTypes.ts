@@ -5,3 +5,8 @@ export type TodosState = {
     loading: boolean,
     error: string | null,
 }
+
+export type TChangeTodo = {
+    id: string,
+    title: string
+}

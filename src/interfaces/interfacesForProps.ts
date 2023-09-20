@@ -9,6 +9,7 @@ export interface IPropsTodo {
 export interface IPropsIconsList {
     onCompleteChange: () => void,
     onDelete: () => void,
+    onChangeClick: () => void,
     completed: boolean
 }
 

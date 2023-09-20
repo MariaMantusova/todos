@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk, AnyAction, PayloadAction} from "@reduxjs/toolkit";
-import {TodosState} from "../types/mainTypes";
+import {TChangeTodo, TodosState} from "../types/mainTypes";
 import {Todo} from "../interfaces/mainInterfaces";
 
 export const fetchTodos = createAsyncThunk<Todo[], undefined, {rejectValue: string}>(
@@ -68,6 +68,34 @@ export const toggleStatus = createAsyncThunk<Todo, string, {rejectValue: string,
     }
 )
 
+export const changeTodo = createAsyncThunk<Todo, TChangeTodo, {rejectValue: string, state: {todos: TodosState}, }>(
+    "todos/changeTodo",
+    async function ({id, title}, {rejectWithValue, getState}) {
+            const todo = getState().todos.list.find(todo => todo.id === id);
+
+            if (todo) {
+                const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title: title,
+
+                    })
+                })
+
+                if (!response.ok) {
+                    return rejectWithValue("Не получается изменить задание.")
+                }
+
+                return (await response.json()) as Todo;
+            }
+
+            return rejectWithValue("Нет такого задания.")
+        }
+)
+
 export const deleteTodo = createAsyncThunk<string, string, {rejectValue: string}>(
     "todos/deleteTodo",
     async function (id, {rejectWithValue}) {
@@ -124,6 +152,16 @@ const todoSlice = createSlice({
             })
             .addCase(deleteTodo.fulfilled, (state, action) => {
                 state.list = state.list.filter(todo => todo.id !== action.payload)
+            })
+            .addCase(changeTodo.pending, (state) => {
+                state.error = null;
+            })
+            .addCase(changeTodo.fulfilled, (state, action) => {
+                const changedTodo = state.list.find(todo => todo.id === action.payload.id)
+
+                if (changedTodo) {
+                    changedTodo.title = action.payload.title;
+                }
             })
             .addMatcher(isError, (state, action: PayloadAction<string>) => {
                 state.error = action.payload;

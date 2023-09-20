@@ -7,7 +7,7 @@ function IconsList(props: IPropsIconsList) {
         <ul className="icons">
             <li className={`icon ${!props.completed ? "icon-done" : "icon-not-done"}`}
                 onClick={props.onCompleteChange}></li>
-            <li className="icon icon-change"></li>
+            <li className="icon icon-change" onClick={props.onChangeClick}></li>
             <li className="icon icon-delete" onClick={props.onDelete}></li>
         </ul>
     );
