@@ -30,7 +30,8 @@ function App() {
             {loading ?
                 <Loading/> :
                 error ?
-                    <></> :
+                    <h2 style={{maxWidth: "400px", margin: "70px auto", color: "red"}}>
+                        {`Произошла ошибка: ${error}`}</h2> :
                     <TodoList/>}
         </>
 
