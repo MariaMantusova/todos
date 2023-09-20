@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface IPropsTodo {
     title: string,
     id: string,
