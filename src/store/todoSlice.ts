@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, AnyAction, PayloadAction} from "@reduxjs/toolkit";
 import {TodosState} from "../types/mainTypes";
 import {Todo} from "../interfaces/mainInterfaces";
 
@@ -22,7 +22,7 @@ export const addNewTodo = createAsyncThunk<Todo, string, {rejectValue: string}>(
         const todo = {
             title: text,
             userId: 1,
-            completed: false
+            completed: false,
         }
 
         const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
@@ -125,7 +125,15 @@ const todoSlice = createSlice({
             .addCase(deleteTodo.fulfilled, (state, action) => {
                 state.list = state.list.filter(todo => todo.id !== action.payload)
             })
+            .addMatcher(isError, (state, action: PayloadAction<string>) => {
+                state.error = action.payload;
+                state.loading = false;
+            })
     }
 })
 
 export default todoSlice.reducer;
+
+function isError(action: AnyAction) {
+    return action.type.endsWith("rejected")
+}

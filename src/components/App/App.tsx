@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import { useAppDispatch } from "../../hook";
+import {useAppDispatch, useAppSelector} from "../../hook";
 import Header from "../Header/Header";
 import Form from "../Form/Form";
 import TodoList from "../TodoList/TodoList";
 import {fetchTodos, addNewTodo} from "../../store/todoSlice";
+import Loading from "../Loading/Loading";
 
 function App() {
     const [text, setText] = useState("");
+    const {loading, error} = useAppSelector(state => state.todos)
     const dispatch = useAppDispatch();
 
     function handleAction(event: any) {
@@ -25,8 +27,13 @@ function App() {
         <>
             <Header/>
             <Form value={text} updateText={setText} handleAction={handleAction}/>
-            <TodoList/>
+            {loading ?
+                <Loading/> :
+                error ?
+                    <></> :
+                    <TodoList/>}
         </>
+
     );
 }
 
