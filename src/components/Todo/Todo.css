@@ -9,6 +9,14 @@
     margin: 0 auto;
 }
 
+@media screen and (max-width: 450px) {
+    .todo {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 20px;
+    }
+}
+
 .todo__form {
     display: flex;
     width: 100%;
@@ -20,11 +28,18 @@
     margin: 0;
     background-color: transparent;
     color: black;
-    max-width: 40%;
+    max-width: 80%;
     width: 100%;
     padding: 5px 10px;
     border: 1px solid black;
     border-radius: 10px;
+    display: flex;
+}
+
+@media screen and (max-width: 450px) {
+    .todo__title {
+        max-width: 100%;
+    }
 }
 
 .todo__title_completed {
