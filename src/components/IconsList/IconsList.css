@@ -1,0 +1,29 @@
+.icons {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.icon-done {
+    background-image: url("../../images/done-icon.svg");
+}
+
+.icon-not-done {
+    background-image: url("../../images/not-done-icon.png");
+}
+
+.icon-change {
+    background-image: url("../../images/refactor-icon.png");
+}
+
+.icon-delete {
+    background-image: url("../../images/delete-icon.svg");
+}
